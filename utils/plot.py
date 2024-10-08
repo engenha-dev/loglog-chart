@@ -14,108 +14,108 @@ def format_plot_data(sheet, spreadsheet_id, cells):
     plot_data = []
     for value_range in value_ranges:
         values = value_range.get("values", [])
-        float_values = np.array(
-            [str(value[0]).replace(",", ".") for value in values if value],
-            dtype=np.float64,
-        )
-        plot_data.append(float_values)
+
+        float_values = []
+        for value in values:
+            if value and value[0] not in ["", "#DIV/0!"]:
+                str_value = str(value[0]).replace(",", ".")
+
+                if str_value.count(".") > 1:
+                    parts = str_value.split(".")
+                    str_value = "".join(parts[:-1]) + "." + parts[-1]
+
+                try:
+                    float_values.append(float(str_value))
+                except ValueError:
+                    float_values.append(0)
+            else:
+                float_values.append(0)
+
+        plot_data.append(np.array(float_values, dtype=np.float64))
 
     return plot_data
 
 
-def plot_data(data):
+def plot_data(data, plot_type):
     fig, ax = plt.subplots(figsize=(10, 15))
 
-    ax.loglog(
-        data[0],
-        data[1],
-        label="FASE MONTANTE",
-        linestyle="-",
-        color="red",
+    def contains_zero(x, y):
+        return np.any(x == 0) or np.any(y == 0)
+
+    labels_and_styles_phase = [
+        ("Fase Concessionária NEOENERGIA SUDESTE", "-", "red"),
+        ("Fase DISJUNTOR GERAL", "-", "black"),
+        ("Corrente de Curto (Icc3F)", "-", "darkgreen"),
+        ("Corrente de Curto (Icc2F)", "-", "orange"),
+        ("Corrente de Carga (I Carga)", "--", "purple"),
+        ("Corrente de Partida Fase (I Partida F)", "--", "dodgerblue"),
+        ("Corrente de Magnetização (I mag)", "-", "pink"),
+        ("Corrente de Magnetização do menor Trafo (I mag menor Trafo)", "-", "olive"),
+        ("ANSI TRAFO 500", "--", "cyan"),
+        ("ANSI TRAFO 500", "--", "lime"),
+        ("ANSI TRAFO 500", "--", "khaki"),
+        ("ANSI TRAFO 500", "--", "lightpink"),
+        ("ANSI TRAFO 500", "--", "darksalmon"),
+        ("ANSI TRAFO 500", "--", "chocolate"),
+        ("ANSI TRAFO 500", "--", "bisque"),
+        ("Curva de dano TRAFO 500", "--", "cyan"),
+        ("Curva de dano TRAFO 500", "--", "lime"),
+        ("Curva de dano TRAFO 500", "--", "khaki"),
+        ("Curva de dano TRAFO 500", "--", "lightpink"),
+        ("Curva de dano TRAFO 500", "--", "darksalmon"),
+        ("Curva de dano TRAFO 500", "--", "chocolate"),
+        ("Curva de dano TRAFO 500", "--", "bisque"),
+        ("ELO 65K", "-", "seagreen"),
+    ]
+
+    labels_and_styles_neutral = [
+        ("Neutro Concessionária NEOENERGIA SUDESTE", "-", "dodgerblue"),
+        ("Neutro DISJUNTOR GERAL", "-", "lightgreen"),
+        ("Corrente de Curto (IccFT -Máx.)", "-", "darkgreen"),
+        ("Corrente de Curto (IccFT -Mín.)", "-", "orange"),
+        ("51GS Concessionária NEOENERGIA SUDESTE", "-", "darkred"),
+        ("Corrente de Carga (I Carga)", "--", "purple"),
+        ("Corrente de Partida Neutro (I Partida N)", "--", "red"),
+        ("Corrente de Magnetização Residual (I mag res.)", "-", "pink"),
+        ("51GS DISJUNTOR GERAL", "-", "gold"),
+        (
+            "Corrente de Magnetização Residual do menor Trafo (I mag res. menor Trafo)",
+            "-",
+            "olive",
+        ),
+        ("NANSI TRAFO 500", "--", "cyan"),
+        ("NANSI TRAFO 500", "--", "lime"),
+        ("NANSI TRAFO 500", "--", "khaki"),
+        ("NANSI TRAFO 500", "--", "lightpink"),
+        ("NANSI TRAFO 500", "--", "darksalmon"),
+        ("NANSI TRAFO 500", "--", "chocolate"),
+        ("NANSI TRAFO 500", "--", "bisque"),
+    ]
+
+    labels_and_styles = (
+        labels_and_styles_phase if plot_type == "phase" else labels_and_styles_neutral
     )
-    ax.loglog(
-        data[2],
-        data[3],
-        label="NEUTRO MONTANTE",
-        linestyle="--",
-        color="dodgerblue",
+    title = (
+        "COORDENOGRAMA DE FASE" if plot_type == "phase" else "COORDENOGRAMA DE NEUTRO"
     )
-    ax.loglog(
-        data[4],
-        data[5],
-        label="FASE JUSANTE",
-        linestyle="-",
-        color="black",
-    )
-    ax.loglog(
-        data[6],
-        data[7],
-        label="NEUTRO JUSANTE",
-        linestyle="--",
-        color="limegreen",
-    )
-    ax.loglog(
-        data[8],
-        data[9],
-        marker=".",
-        label="I CARGA",
-        linestyle=":",
-        color="orchid",
-    )
-    ax.loglog(
-        data[10],
-        data[11],
-        marker=".",
-        label="ANSI",
-        linestyle=":",
-        color="royalblue",
-    )
-    ax.loglog(
-        data[12],
-        data[13],
-        marker=".",
-        label="IMAG",
-        linestyle=":",
-        color="fuchsia",
-    )
-    ax.loglog(
-        data[14],
-        data[15],
-        marker=".",
-        label="ICC3F",
-        linestyle=":",
-        color="darkgreen",
-    )
-    ax.loglog(
-        data[16],
-        data[17],
-        marker=".",
-        label="ICC1F",
-        linestyle=":",
-        color="darkorange",
-    )
-    ax.loglog(
-        data[18],
-        data[19],
-        label="51 GS MONTANTE",
-        linestyle=":",
-        color="darkred",
-    )
-    ax.loglog(
-        data[20],
-        data[21],
-        label="51 GS JUSANTE",
-        linestyle=":",
-        color="orange",
-    )
-    ax.loglog(data[22], data[23], label="ELO", linestyle="-", color="brown")
+
+    for i in range(0, len(data), 2):
+        if (
+            i + 1 < len(data)
+            and len(data[i]) > 0
+            and not contains_zero(data[i], data[i + 1])
+        ):
+            label, linestyle, color = labels_and_styles[i // 2]
+            ax.loglog(
+                data[i], data[i + 1], label=label, linestyle=linestyle, color=color
+            )
 
     ax.set(
         xlabel="Corrente (A)",
         ylabel="Tempo (s)",
         xlim=(0.1, 10000),
         ylim=(0.01, 1000),
-        title="COORDENOGRAMA FASES E NEUTRO\nDISJUNTOR GERAL DA CABINE X CONCESSIONÁRIA",
+        title=title,
     )
 
     ax.xaxis.set_major_formatter(ScalarFormatter())
