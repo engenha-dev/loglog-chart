@@ -3,7 +3,7 @@ import streamlit as st
 from utils.google import get_sheet_service, get_title, upload_drive
 from utils.plot import format_plot_data, plot_data
 
-users = {"admin": "web2023"}
+users = {"admin": "web2024"}
 
 phase_cells = [
     "Dados_Gráficos!C9:C58",
