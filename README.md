@@ -1,4 +1,4 @@
-# Coordenograma Web
+# Coordenograma Estudo MT
 
 ## 🔨 Funcionalidades do projeto
 - Autenticar usuários
@@ -11,6 +11,8 @@
 - `Python`
 - `Matplotlib`
 - `Streamlit`
+- `Custom TKInter`
+- `PyInstaller`
 - `API do Google Sheets`
 - `API do Google Drive`
 
@@ -19,17 +21,38 @@
 ### Lembre-se de ter seu arquivo de credenciais do Google na raiz do projeto
 
 ```bash
-python3 -m venv .venv #Windows: python -m venv .venv
+python -m venv .venv
 ```
 
 ```bash
-source .venv/bin/activate #Windows: .venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 ```bash
 pip install -r requirements.txt
 ```
 
+Rodar Web (Streamlit):
 ```bash
-streamlit run app.py
+streamlit run app_web.py
 ```
+
+Rodar Local (CTK):
+```bash
+python app_local.py
+```
+
+Gerar Executável:
+```bash
+pyinstaller --onefile --windowed --name "ECS Procord Beta" app_local.py
+```
+
+## 💼 Setup para clientes
+1. Criar a pasta ECS Procord Beta na máquina do cliente
+2. Pegar o executável da pasta dist e colocar na raiz da pasta do cliente
+3. Criar a pasta auth dentro da pasta do cliente
+4. Configurar a API do Google
+5. Baixar o arquivo das credenciais e renomear como client_secrets.json
+6. Colocar o arquivo client_secrets.json na pasta auth
+7. Dar 2 cliques no executável
+8. Autorizar script com a conta google que criou as credenciais
