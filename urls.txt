@@ -1,0 +1,2 @@
+SHEET_URL=https://docs.google.com/spreadsheets/d/1996UCu8Zrlz6EKvT9lYdCSV37A1BsQ3jfF9YZgtNt4M/edit?gid=1653164555#gid=1653164555
+FOLDER_URL=https://drive.google.com/drive/folders/1GHjAJH4yGXX2xO4EUX6uh4HdBa7t-0PV

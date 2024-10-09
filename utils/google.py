@@ -6,6 +6,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 
+from utils.ids import get_ids
+
 SCOPES_SHEETS = ["https://www.googleapis.com/auth/spreadsheets"]
 SCOPES_DRIVE = ["https://www.googleapis.com/auth/drive"]
 
@@ -63,9 +65,10 @@ def get_title(sheet, spreadsheet_id):
     return "COORDENOGRAMA"
 
 
-def upload_drive(img_buffer, file_name, folder_id="1DV5C_Yi26DqNn2WJ1HP1FBdiHh5mwTpE"):
+def upload_drive(img_buffer, file_name):
+    FOLDER_ID = get_ids("drive")
     drive_service = get_drive_service()
 
-    file_metadata = {"name": file_name, "parents": [folder_id]}
+    file_metadata = {"name": file_name, "parents": [FOLDER_ID]}
     media = MediaIoBaseUpload(img_buffer, mimetype="image/jpeg")
     drive_service.files().create(body=file_metadata, media_body=media).execute()

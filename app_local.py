@@ -3,6 +3,7 @@ from tkinter import messagebox
 import customtkinter as ctk
 
 from utils.google import get_sheet_service, get_title, upload_drive
+from utils.ids import get_ids
 from utils.plot import format_plot_data, plot_data
 
 users = {"admin": "web2024"}
@@ -91,7 +92,7 @@ neutral_cells = [
     "Dados_Gráficos!DN9:DN10",  # NANSI Trafo 7 - Cliente
 ]
 
-SPREADSHEET_ID = "1996UCu8Zrlz6EKvT9lYdCSV37A1BsQ3jfF9YZgtNt4M"
+SPREADSHEET_ID = get_ids("sheets")
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
