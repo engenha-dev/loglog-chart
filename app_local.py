@@ -9,10 +9,10 @@ from utils.plot import format_plot_data, plot_data
 users = {"admin": "web2024"}
 
 phase_cells = [
-    "Dados_Gráficos!C9:C58",
-    "Dados_Gráficos!D9:D58",  # 51/50 - Concessionária
-    "Dados_Gráficos!K9:K58",
-    "Dados_Gráficos!L9:L58",  # 51/50 - Cabine Cliente
+    "Dados_Gráficos!C9:C108",
+    "Dados_Gráficos!D9:D108",  # 51/50 - Concessionária
+    "Dados_Gráficos!K9:K108",
+    "Dados_Gráficos!L9:L108",  # 51/50 - Cabine Cliente
     "Dados_Gráficos!R9:R10",
     "Dados_Gráficos!S9:S10",  # Corrente de Curto Icc3F - Concessionária
     "Dados_Gráficos!U9:U10",
@@ -58,10 +58,10 @@ phase_cells = [
 ]
 
 neutral_cells = [
-    "Dados_Gráficos!G9:G58",
-    "Dados_Gráficos!H9:H58",  # 51N/50N - Concessionária
-    "Dados_Gráficos!O9:O58",
-    "Dados_Gráficos!P9:P58",  # 51N/50N - Cabine Cliente
+    "Dados_Gráficos!G9:G108",
+    "Dados_Gráficos!H9:H108",  # 51N/50N - Concessionária
+    "Dados_Gráficos!O9:O108",
+    "Dados_Gráficos!P9:P108",  # 51N/50N - Cabine Cliente
     "Dados_Gráficos!X9:X10",
     "Dados_Gráficos!Y9:Y10",  # Corrente de Curto IccFT Máx - Concessionária
     "Dados_Gráficos!AA9:AA10",

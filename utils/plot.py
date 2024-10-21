@@ -49,7 +49,7 @@ def plot_data(data, plot_type):
         ("Corrente de Curto (Icc2F)", "-", "orange"),
         ("Corrente de Carga (I Carga)", "--", "purple"),
         ("Corrente de Partida Fase (I Partida F)", "--", "dodgerblue"),
-        ("Corrente de Magnetização (I mag)", "-", "pink"),
+        ("Corrente de Magnetização (I mag)", "-", "deeppink"),
         ("Corrente de Magnetização do menor Trafo (I mag menor Trafo)", "-", "olive"),
         ("ANSI TRAFO 500", "--", "cyan"),
         ("ANSI TRAFO 500", "--", "lime"),
@@ -76,7 +76,7 @@ def plot_data(data, plot_type):
         ("51GS Concessionária NEOENERGIA SUDESTE", "-", "darkred"),
         ("Corrente de Carga (I Carga)", "--", "purple"),
         ("Corrente de Partida Neutro (I Partida N)", "--", "red"),
-        ("Corrente de Magnetização Residual (I mag res.)", "-", "pink"),
+        ("Corrente de Magnetização Residual (I mag res.)", "-", "deeppink"),
         ("51GS DISJUNTOR GERAL", "-", "gold"),
         (
             "Corrente de Magnetização Residual do menor Trafo (I mag res. menor Trafo)",
