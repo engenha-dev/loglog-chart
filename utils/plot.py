@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FormatStrFormatter, ScalarFormatter
 
+from utils.google import get_batch_values, get_sheet_service
+from utils.ids import get_ids
+
 
 def format_plot_data(sheet, spreadsheet_id, cells):
     result = (
@@ -42,54 +45,157 @@ def plot_data(data, plot_type):
     def contains_zero(x, y):
         return np.any(x == 0) or np.any(y == 0)
 
+    phase_ranges = [
+        "Dados_Gráficos!B3",
+        "Dados_Gráficos!J3",
+        "Dados_Gráficos!R3",
+        "Dados_Gráficos!U3",
+        "Dados_Gráficos!AG3",
+        "Dados_Gráficos!AJ3",
+        "Dados_Gráficos!AP3",
+        "Dados_Gráficos!AY3",
+        "Dados_Gráficos!BE3",
+        "Dados_Gráficos!BH3",
+        "Dados_Gráficos!BK3",
+        "Dados_Gráficos!BN3",
+        "Dados_Gráficos!BQ3",
+        "Dados_Gráficos!BT3",
+        "Dados_Gráficos!BW3",
+        "Dados_Gráficos!BZ3",
+        "Dados_Gráficos!CC3",
+        "Dados_Gráficos!CF3",
+        "Dados_Gráficos!CI3",
+        "Dados_Gráficos!CL3",
+        "Dados_Gráficos!CO3",
+        "Dados_Gráficos!CR3",
+        "Dados_Gráficos!DP3",
+    ]
+
+    neutral_ranges = [
+        "Dados_Gráficos!F3",
+        "Dados_Gráficos!N3",
+        "Dados_Gráficos!X3",
+        "Dados_Gráficos!AA3",
+        "Dados_Gráficos!AD3",
+        "Dados_Gráficos!AG3",
+        "Dados_Gráficos!AM3",
+        "Dados_Gráficos!AS3",
+        "Dados_Gráficos!AV3",
+        "Dados_Gráficos!BB3",
+        "Dados_Gráficos!CU3",
+        "Dados_Gráficos!CX3",
+        "Dados_Gráficos!DA3",
+        "Dados_Gráficos!DD3",
+        "Dados_Gráficos!DG3",
+        "Dados_Gráficos!DJ3",
+        "Dados_Gráficos!DM3",
+    ]
+
+    SPREADSHEET_ID = get_ids("sheets")
+    sheet = get_sheet_service()
+    phase_values = get_batch_values(sheet, SPREADSHEET_ID, phase_ranges)
+    neutral_values = get_batch_values(sheet, SPREADSHEET_ID, neutral_ranges)
+
     labels_and_styles_phase = [
-        ("Fase Concessionária NEOENERGIA SUDESTE", "-", "red"),
-        ("Fase DISJUNTOR GERAL", "-", "black"),
-        ("Corrente de Curto (Icc3F)", "-", "darkgreen"),
-        ("Corrente de Curto (Icc2F)", "-", "orange"),
-        ("Corrente de Carga (I Carga)", "--", "purple"),
-        ("Corrente de Partida Fase (I Partida F)", "--", "dodgerblue"),
-        ("Corrente de Magnetização (I mag)", "-", "deeppink"),
-        ("Corrente de Magnetização do menor Trafo (I mag menor Trafo)", "-", "olive"),
-        ("ANSI TRAFO 500", "--", "cyan"),
-        ("ANSI TRAFO 500", "--", "lime"),
-        ("ANSI TRAFO 500", "--", "khaki"),
-        ("ANSI TRAFO 500", "--", "lightpink"),
-        ("ANSI TRAFO 500", "--", "darksalmon"),
-        ("ANSI TRAFO 500", "--", "chocolate"),
-        ("ANSI TRAFO 500", "--", "bisque"),
-        ("Curva de dano TRAFO 500", "--", "cyan"),
-        ("Curva de dano TRAFO 500", "--", "lime"),
-        ("Curva de dano TRAFO 500", "--", "khaki"),
-        ("Curva de dano TRAFO 500", "--", "lightpink"),
-        ("Curva de dano TRAFO 500", "--", "darksalmon"),
-        ("Curva de dano TRAFO 500", "--", "chocolate"),
-        ("Curva de dano TRAFO 500", "--", "bisque"),
-        ("ELO 65K", "-", "seagreen"),
+        (label, linestyle, color)
+        for label, linestyle, color in zip(
+            phase_values,
+            [
+                "-",
+                "-",
+                "-",
+                "-",
+                "--",
+                "--",
+                "-",
+                "-",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "-",
+            ],
+            [
+                "red",
+                "black",
+                "darkgreen",
+                "orange",
+                "purple",
+                "dodgerblue",
+                "deeppink",
+                "olive",
+                "cyan",
+                "lime",
+                "khaki",
+                "lightpink",
+                "darksalmon",
+                "chocolate",
+                "bisque",
+                "cyan",
+                "lime",
+                "khaki",
+                "lightpink",
+                "darksalmon",
+                "chocolate",
+                "bisque",
+                "seagreen",
+            ],
+        )
     ]
 
     labels_and_styles_neutral = [
-        ("Neutro Concessionária NEOENERGIA SUDESTE", "-", "dodgerblue"),
-        ("Neutro DISJUNTOR GERAL", "-", "lightgreen"),
-        ("Corrente de Curto (IccFT -Máx.)", "-", "darkgreen"),
-        ("Corrente de Curto (IccFT -Mín.)", "-", "orange"),
-        ("51GS Concessionária NEOENERGIA SUDESTE", "-", "darkred"),
-        ("Corrente de Carga (I Carga)", "--", "purple"),
-        ("Corrente de Partida Neutro (I Partida N)", "--", "red"),
-        ("Corrente de Magnetização Residual (I mag res.)", "-", "deeppink"),
-        ("51GS DISJUNTOR GERAL", "-", "gold"),
-        (
-            "Corrente de Magnetização Residual do menor Trafo (I mag res. menor Trafo)",
-            "-",
-            "olive",
-        ),
-        ("NANSI TRAFO 500", "--", "cyan"),
-        ("NANSI TRAFO 500", "--", "lime"),
-        ("NANSI TRAFO 500", "--", "khaki"),
-        ("NANSI TRAFO 500", "--", "lightpink"),
-        ("NANSI TRAFO 500", "--", "darksalmon"),
-        ("NANSI TRAFO 500", "--", "chocolate"),
-        ("NANSI TRAFO 500", "--", "bisque"),
+        (label, linestyle, color)
+        for label, linestyle, color in zip(
+            neutral_values,
+            [
+                "-",
+                "-",
+                "-",
+                "-",
+                "-",
+                "--",
+                "--",
+                "-",
+                "-",
+                "-",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+                "--",
+            ],
+            [
+                "dodgerblue",
+                "lightgreen",
+                "darkgreen",
+                "orange",
+                "darkred",
+                "purple",
+                "red",
+                "deeppink",
+                "gold",
+                "olive",
+                "cyan",
+                "lime",
+                "khaki",
+                "lightpink",
+                "darksalmon",
+                "chocolate",
+                "bisque",
+            ],
+        )
     ]
 
     labels_and_styles = (
@@ -122,8 +228,8 @@ def plot_data(data, plot_type):
     ax.yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
 
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-    ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
+    ax.set_position([box.x0, box.y0, box.width * 0.6, box.height])
+    ax.legend(loc="center left", bbox_to_anchor=(1, 0.5), ncol=1, fontsize="small")
 
     ax.grid(which="both", axis="both", linestyle="-")
 

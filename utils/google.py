@@ -65,6 +65,14 @@ def get_title(sheet, spreadsheet_id):
     return "COORDENOGRAMA"
 
 
+def get_batch_values(sheet, spreadsheet_id, ranges):
+    result = (
+        sheet.values().batchGet(spreadsheetId=spreadsheet_id, ranges=ranges).execute()
+    )
+    value_ranges = result.get("valueRanges", [])
+    return [value_range.get("values", [[""]])[0][0] for value_range in value_ranges]
+
+
 def upload_drive(img_buffer, file_name):
     FOLDER_ID = get_ids("drive")
     drive_service = get_drive_service()
