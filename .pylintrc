@@ -421,6 +421,7 @@ spelling-store-unknown-words=no
 # Limits count of emitted suggestions for spelling mistakes.
 max-spelling-suggestions=2
 
+generated-members=spreadsheets,files
 
 [DESIGN]
 
