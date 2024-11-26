@@ -2,7 +2,7 @@ from tkinter import messagebox
 
 import customtkinter as ctk
 
-from utils.google import get_sheet_service, get_title, upload_drive
+from utils.google import get_sheet_service, get_title, refresh_token, upload_drive
 from utils.ids import get_ids
 from utils.plot import format_plot_data, plot_data
 
@@ -180,10 +180,15 @@ def upload_to_drive():
     messagebox.showinfo("Sucesso", f"Arquivo {file_name} salvo no Google Drive!")
 
 
+def refresh_google_token():
+    message = refresh_token()
+    messagebox.showinfo("Tokens Google", message)
+
+
 label_dashboard = ctk.CTkLabel(
     frame_dashboard, text="Dashboard | ECS Procord Beta", font=("Arial", 20)
 )
-label_dashboard.pack(pady=10)
+label_dashboard.pack(pady=5)
 
 label_dashboard = ctk.CTkLabel(
     frame_dashboard,
@@ -209,6 +214,11 @@ button_generate_plot.pack(pady=5)
 
 button_upload_drive = ctk.CTkButton(
     frame_dashboard, text="Salvar no Google Drive", command=upload_to_drive
+)
+button_upload_drive.pack(pady=5)
+
+button_upload_drive = ctk.CTkButton(
+    frame_dashboard, text="Renovar Token", command=refresh_google_token
 )
 button_upload_drive.pack(pady=5)
 
