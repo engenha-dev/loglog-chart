@@ -6,8 +6,6 @@ from utils.google import get_sheet_service, get_title, refresh_token, upload_dri
 from utils.ids import get_ids
 from utils.plot import format_plot_data, plot_data
 
-users = {"admin": "web2024"}
-
 phase_cells = [
     "Dados_Gráficos!C9:C108",
     "Dados_Gráficos!D9:D108",  # 51/50 - Concessionária
@@ -97,24 +95,13 @@ SPREADSHEET_ID = get_ids("sheets")
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 app = ctk.CTk()
-app.geometry("500x250")
-app.title("Login | ECS Procord Beta")
+app.geometry("500x260")
+app.title("ECS Procord Beta")
 app.resizable(False, False)
 
 
-def validate_login(username, password):
-    return username in users and password == users[username]
-
-
 def initialize_session_state():
-    app.logged_in = False
     app.title_text = ""
-
-
-def set_logged_in_state():
-    app.logged_in = True
-    frame_login.pack_forget()
-    frame_dashboard.pack(fill="both", expand=True)
 
 
 def set_title_in_state():
@@ -128,37 +115,6 @@ def format_and_plot(cell_range, choice):
     data_values = format_plot_data(sheet, SPREADSHEET_ID, cell_range)
     fig = plot_data(data_values, choice)
     return fig
-
-
-def login():
-    username = entry_username.get()
-    password = entry_password.get()
-    if validate_login(username, password):
-        set_logged_in_state()
-        set_title_in_state()
-        app.title("Dashboard | ECS Procord Beta")
-    else:
-        messagebox.showerror("Erro", "Usuário ou senha incorretos!")
-
-
-frame_login = ctk.CTkFrame(app)
-frame_login.pack(fill="both", expand=False)
-
-label_login = ctk.CTkLabel(
-    frame_login, text="Login | ECS Procord Beta", font=("Arial", 20)
-)
-label_login.pack(pady=10)
-
-entry_username = ctk.CTkEntry(frame_login, placeholder_text="Usuário")
-entry_username.pack(pady=10)
-
-entry_password = ctk.CTkEntry(frame_login, placeholder_text="Senha", show="*")
-entry_password.pack(pady=10)
-
-button_login = ctk.CTkButton(frame_login, text="Entrar", command=login)
-button_login.pack(pady=20)
-
-frame_dashboard = ctk.CTkFrame(app)
 
 
 def generate_plot():
@@ -185,8 +141,11 @@ def refresh_google_token():
     messagebox.showinfo("Tokens Google", message)
 
 
+frame_dashboard = ctk.CTkFrame(app)
+frame_dashboard.pack(fill="both", expand=True)
+
 label_dashboard = ctk.CTkLabel(
-    frame_dashboard, text="Dashboard | ECS Procord Beta", font=("Arial", 20)
+    frame_dashboard, text="ECS Procord Beta", font=("Arial", 20)
 )
 label_dashboard.pack(pady=5)
 
