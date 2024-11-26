@@ -45,6 +45,7 @@ python app_local.py
 Gerar Executável:
 ```bash
 pyinstaller --onefile --windowed --name "ECS Procord Beta" app_local.py
+pyinstaller --onefile --name "ECS Procord Beta (terminal)" app_local.py
 ```
 
 ## 💼 Setup para clientes
