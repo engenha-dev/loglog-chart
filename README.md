@@ -50,10 +50,11 @@ pyinstaller --onefile --name "ECS Procord Beta (terminal)" app_local.py
 
 ## 💼 Setup para clientes
 1. Criar a pasta ECS Procord Beta na máquina do cliente
-2. Pegar o executável da pasta dist e colocar na raiz da pasta do cliente
-3. Criar a pasta auth dentro da pasta do cliente
-4. Configurar a API do Google
-5. Baixar o arquivo das credenciais e renomear como client_secrets.json
-6. Colocar o arquivo client_secrets.json na pasta auth
-7. Dar 2 cliques no executável
-8. Autorizar script com a conta google que criou as credenciais
+2. Criar arquivo urls.txt com os IDs do arquivo e pasta
+3. Pegar o executável da pasta dist e colocar na raiz da pasta do cliente
+4. Criar a pasta auth dentro da pasta do cliente
+5. Configurar a API do Google
+6. Baixar o arquivo das credenciais e renomear como client_secrets.json
+7. Colocar o arquivo client_secrets.json na pasta auth
+8. Dar 2 cliques no executável
+9. Autorizar script com a conta google que criou as credenciais
